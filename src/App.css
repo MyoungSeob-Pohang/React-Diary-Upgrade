@@ -1,38 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap');
+
+body {
+    background-color: #f6f6f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Nanum Pen Script';
+    min-height: 100vh;
+    margin: 0;
+}
+
+@media (min-width: 650px) {
+    .App {
+        width: 640px;
+    }
+}
+
+@media (max-width: 650px) {
+    .App {
+        width: 90vw;
+    }
+}
+
+#root {
+    background-color: #fff;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
 .App {
-  text-align: center;
+    min-height: 100vh;
+    padding: 0 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* 버튼 */
+.MyButton {
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    white-space: nowrap;
+    font-family: 'Nanum Pen Script';
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.MyButton_default {
+    background-color: #ececec;
+    color: #000;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.MyButton_positive {
+    background-color: #64c964;
+    color: #fff;
 }
 
-.App-link {
-  color: #61dafb;
+.MyButton_negative {
+    background-color: #fd565f;
+    color: #fff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* header */
+
+header {
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+header > div {
+    display: flex;
+}
+
+header .head_text {
+    width: 50%;
+    font-size: 25px;
+    justify-content: center;
+}
+
+header .head_btn_left {
+    width: 25%;
+    justify-content: start;
+}
+
+header .head_btn_right {
+    width: 25%;
+    justify-content: end;
+}
+
+header button {
+    font-family: 'Nanum Pen Script';
 }
