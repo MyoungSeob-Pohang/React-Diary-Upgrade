@@ -1,8 +1,4 @@
-import { useParams } from 'react-router-dom';
-
 const Diary = () => {
-    const { id } = useParams();
-
     return (
         <div className="Diary">
             <h1>Diary</h1>
