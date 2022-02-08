@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
@@ -10,6 +10,9 @@ import Diary from './pages/Diary';
 const reducer = (state, action) => {
     // 새로운 상태 담을 배열
     let newState = [];
+
+    console.log(state);
+    console.log(action);
 
     switch (action.type) {
         case 'INIT': {
