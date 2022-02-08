@@ -31,11 +31,6 @@ const Home = () => {
         // curDate는 달이 변경되면 당연히 상태변화해야 되니 넘겨주고 , diaryDummyList도 달이 바뀌면서 각 달에 맞는 일기를 뽑아야하기에 같이 전달
     }, [diaryDummyList, curDate]);
 
-    // 더미데이터 관리를 위한 data는 초기값으로 빈 배열을 전달했음으로 출력은 [] 빈배열이 먼저 나오고 그다음 data가 변경될 때 나온다.
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
-
     // 달 증가 함수
     const increaseMonth = () => {
         setCurDate(new Date(curDate.getFullYear(), curDate.getMonth() + 1, curDate.getDate()));

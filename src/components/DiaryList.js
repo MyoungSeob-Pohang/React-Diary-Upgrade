@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DiaryItem from './DiaryItem';
 import MyButton from './MyButton';
 
 const ControlMenu = ({ value, onChange, optionList }) => {
@@ -34,7 +35,7 @@ const DiaryList = ({ diaryList }) => {
     // 감정 State 초기값은 전체 표시를 위해 all
     const [filter, setFilter] = useState('all');
 
-    // 최신/오래된 순에 따라 다이어리 리스트의 정렬을 바꾸기 위한 함수
+    // 다이어리 리스트의 정렬을 바꾸기 위한 함수
     // diaryList가 가진값의 변경을 막기 위해 JSON.stringify로 문자열로 받아온 다음 JSON.parse로 json객체로 다시 만들어서 반환받는다
     // 그 값을 compare를 사용하여 정렬 시켜준다.
     const getProcessedDiaryList = () => {
@@ -77,9 +78,7 @@ const DiaryList = ({ diaryList }) => {
             </div>
 
             {getProcessedDiaryList().map((it) => (
-                <div key={it.id}>
-                    {it.content} {it.emotion}
-                </div>
+                <DiaryItem key={it.id} {...it} />
             ))}
         </div>
     );
