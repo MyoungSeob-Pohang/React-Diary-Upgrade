@@ -1,7 +1,7 @@
 import MyHeader from './MyHeader';
 import MyButton from './MyButton';
 import { useNavigate } from 'react-router-dom';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import EmotionItem from './EmotionItem';
 import { DiaryDispatchContext } from '../App';
 
@@ -17,13 +17,13 @@ const emotionList = [
     { emotion_id: 5, emotion_img: process.env.PUBLIC_URL + '/assets/emotion5.png', emotion_descript: '끔찍함' },
 ];
 
-const DiaryEditor = () => {
+const DiaryEditor = ({ isEdit, originData }) => {
     const navigator = useNavigate();
     const [date, setDate] = useState(getStringDate(new Date()));
     const [emotion, setEmotion] = useState(3);
     const [content, setContent] = useState();
     const contentRef = useRef();
-    const { onCreate } = useContext(DiaryDispatchContext);
+    const { onCreate, onEdit } = useContext(DiaryDispatchContext);
 
     const handleClickEmotion = (emotion) => {
         setEmotion(emotion);
@@ -34,12 +34,32 @@ const DiaryEditor = () => {
             contentRef.current.focus();
             return;
         }
-        onCreate(date, content, emotion);
+
+        if (window.confirm(isEdit ? '일기를 수정 하시겠습니까?' : '일기를 작성 하시겠습니까?')) {
+            if (isEdit) {
+                onEdit(originData.id, date, content, emotion);
+            } else {
+                onCreate(date, content, emotion);
+            }
+        }
+
         navigator('/', { replace: true });
     };
+
+    useEffect(() => {
+        if (isEdit) {
+            setDate(getStringDate(new Date(parseInt(originData.date))));
+            setEmotion(originData.emotion);
+            setContent(originData.content);
+        }
+    }, [isEdit, originData]);
+
     return (
         <div className="DiaryEditor">
-            <MyHeader headText={'새 일기쓰기'} leftChild={<MyButton text={'< 뒤로가기'} onClick={() => navigator(-1)} />} />
+            <MyHeader
+                headText={isEdit ? '일기 수정하기' : '새 일기쓰기'}
+                leftChild={<MyButton text={'< 뒤로가기'} onClick={() => navigator(-1)} />}
+            />
             <div>
                 <section>
                     <h4>오늘은 언제인가요 ?</h4>
