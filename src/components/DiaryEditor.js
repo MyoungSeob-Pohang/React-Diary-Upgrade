@@ -4,18 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useRef, useState } from 'react';
 import EmotionItem from './EmotionItem';
 import { DiaryDispatchContext } from '../App';
-
-const getStringDate = (date) => {
-    return date.toISOString().slice(0, 10);
-};
-
-const emotionList = [
-    { emotion_id: 1, emotion_img: process.env.PUBLIC_URL + '/assets/emotion1.png', emotion_descript: '완전 좋음' },
-    { emotion_id: 2, emotion_img: process.env.PUBLIC_URL + '/assets/emotion2.png', emotion_descript: '좋음' },
-    { emotion_id: 3, emotion_img: process.env.PUBLIC_URL + '/assets/emotion3.png', emotion_descript: '그럭저럭' },
-    { emotion_id: 4, emotion_img: process.env.PUBLIC_URL + '/assets/emotion4.png', emotion_descript: '나쁨' },
-    { emotion_id: 5, emotion_img: process.env.PUBLIC_URL + '/assets/emotion5.png', emotion_descript: '끔찍함' },
-];
+import { getStringDate } from '../util/date';
+import { emotionList } from '../util/emotion';
 
 const DiaryEditor = ({ isEdit, originData }) => {
     const navigator = useNavigate();
@@ -23,7 +13,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
     const [emotion, setEmotion] = useState(3);
     const [content, setContent] = useState();
     const contentRef = useRef();
-    const { onCreate, onEdit } = useContext(DiaryDispatchContext);
+    const { onCreate, onEdit, onRemove } = useContext(DiaryDispatchContext);
 
     const handleClickEmotion = (emotion) => {
         setEmotion(emotion);
@@ -46,6 +36,13 @@ const DiaryEditor = ({ isEdit, originData }) => {
         navigator('/', { replace: true });
     };
 
+    const handleRemove = () => {
+        if (window.confirm('정말 삭제 하시겠습니까 ?')) {
+            onRemove(originData.id);
+            navigator('/', { replace: true });
+        }
+    };
+
     useEffect(() => {
         if (isEdit) {
             setDate(getStringDate(new Date(parseInt(originData.date))));
@@ -59,6 +56,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
             <MyHeader
                 headText={isEdit ? '일기 수정하기' : '새 일기쓰기'}
                 leftChild={<MyButton text={'< 뒤로가기'} onClick={() => navigator(-1)} />}
+                rightChild={isEdit && <MyButton text={'삭제하기'} type={'negative'} onClick={handleRemove} />}
             />
             <div>
                 <section>

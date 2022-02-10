@@ -1,4 +1,4 @@
-import React, { useReducer, useRef } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
@@ -33,6 +33,7 @@ const reducer = (state, action) => {
         default:
             return state;
     }
+    localStorage.setItem('diary', JSON.stringify(newState));
     // switch 끝나고 새로운 상태 리턴
     return newState;
 };
@@ -43,42 +44,19 @@ export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
 function App() {
-    // 더미데이터
-    const dummyData = [
-        {
-            id: 1,
-            emotion: 1,
-            content: '오늘의일기 1번',
-            date: 1644241008374,
-        },
-        {
-            id: 2,
-            emotion: 2,
-            content: '오늘의일기 2번',
-            date: 1644241008376,
-        },
-        {
-            id: 3,
-            emotion: 3,
-            content: '오늘의일기 3번',
-            date: 1644241008379,
-        },
-        {
-            id: 4,
-            emotion: 4,
-            content: '오늘의일기 4번',
-            date: 1644241008380,
-        },
-        {
-            id: 5,
-            emotion: 5,
-            content: '오늘의일기 5번',
-            date: 1644241008382,
-        },
-    ];
+    useEffect(() => {
+        const localData = localStorage.getItem('diary');
+
+        if (localData) {
+            const diaryList = JSON.parse(localData).sort((a, b) => parseInt(b.id) - parseInt(a.id));
+            dataId.current = parseInt(diaryList[0].id) + 1;
+
+            dispatch({ type: 'INIT', data: diaryList });
+        }
+    }, []);
 
     // 상태 업데이트 로직 분리를 위한 useReducer 선언 , 초기값으로 dummyData 전달
-    const [data, dispatch] = useReducer(reducer, dummyData);
+    const [data, dispatch] = useReducer(reducer, []);
     // 아이디 값으로 쓰기위한 Ref
     const dataId = useRef(0);
 

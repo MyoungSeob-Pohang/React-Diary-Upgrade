@@ -23,7 +23,7 @@ const Home = () => {
         // 일기의 길이가 1개보다 많아야 조건 진행
         if (diaryDummyList.length >= 1) {
             const firstDay = new Date(curDate.getFullYear(), curDate.getMonth(), 1).getTime();
-            const lastDay = new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0).getTime();
+            const lastDay = new Date(curDate.getFullYear(), curDate.getMonth() + 1, 0, 23, 59, 59).getTime();
 
             // 그걸 setData에 전달하여 새로운 데이터 생성
             setData(diaryDummyList.filter((it) => firstDay <= it.date && it.date <= lastDay));
