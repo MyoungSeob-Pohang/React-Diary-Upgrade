@@ -1,7 +1,7 @@
 import MyHeader from './MyHeader';
 import MyButton from './MyButton';
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import EmotionItem from './EmotionItem';
 import { DiaryDispatchContext } from '../App';
 import { getStringDate } from '../util/date';
@@ -15,9 +15,9 @@ const DiaryEditor = ({ isEdit, originData }) => {
     const contentRef = useRef();
     const { onCreate, onEdit, onRemove } = useContext(DiaryDispatchContext);
 
-    const handleClickEmotion = (emotion) => {
-        setEmotion(emotion);
-    };
+    // const handleClickEmotion = useCallback((emotion) => {
+    //     setEmotion(emotion);
+    // }, []);
 
     const handleSubmit = () => {
         if (content.length < 1) {
@@ -70,7 +70,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
                     <h4>오늘의 감정</h4>
                     <div className="input_box emotion_list_wrapper">
                         {emotionList.map((it) => (
-                            <EmotionItem key={it.emotion_id} {...it} onClick={handleClickEmotion} isSelected={it.emotion_id === emotion} />
+                            <EmotionItem key={it.emotion_id} {...it} onClick={setEmotion} isSelected={it.emotion_id === emotion} />
                         ))}
                     </div>
                 </section>
