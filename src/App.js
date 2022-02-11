@@ -44,19 +44,22 @@ export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
 function App() {
+    // 상태 업데이트 로직 분리를 위한 useReducer 선언 , 초기값으로 dummyData 전달
+    const [data, dispatch] = useReducer(reducer, []);
+
     useEffect(() => {
         const localData = localStorage.getItem('diary');
 
         if (localData) {
             const diaryList = JSON.parse(localData).sort((a, b) => parseInt(b.id) - parseInt(a.id));
-            dataId.current = parseInt(diaryList[0].id) + 1;
 
-            dispatch({ type: 'INIT', data: diaryList });
+            if (diaryList.length >= 1) {
+                dataId.current = parseInt(diaryList[0].id) + 1;
+                dispatch({ type: 'INIT', data: diaryList });
+            }
         }
     }, []);
 
-    // 상태 업데이트 로직 분리를 위한 useReducer 선언 , 초기값으로 dummyData 전달
-    const [data, dispatch] = useReducer(reducer, []);
     // 아이디 값으로 쓰기위한 Ref
     const dataId = useRef(0);
 

@@ -10,6 +10,10 @@ const Home = () => {
     // 더미데이터 관리를위한 상태
     const [data, setData] = useState([]);
 
+    useEffect(() => {
+        const titleElement = document.getElementsByTagName('title')[0];
+        titleElement.innerText = `감정 일기장`;
+    }, []);
     // 날짜 상태
     const [curDate, setCurDate] = useState(new Date());
     // MyHeader의 headText 값
